@@ -1,5 +1,6 @@
 from PIL import  Image
 import numpy
+from keras.models import load_model
 model = load_model('traffic_classifier.h5')
 
 
