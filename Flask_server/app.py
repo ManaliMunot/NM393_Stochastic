@@ -81,3 +81,30 @@ def admin_display():
         return render_template('admin_display.html', value_username = username, dbentry = images, u_count = user_count, g_count = grievances_count)
     else:
         return redirect(url_for('login'))
+
+
+@app.route('/user', methods=['GET','POST'])
+def upload_image():
+    if 'username' in session:
+        username = session['username']
+        return render_template('user.html',value_username= username)
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/file/<filename>')
+def file(filename):
+    return mongo.send_file(filename)
+
+
+
+@app.route('/sign_out')
+def sign_out():
+    if "username" in session:
+        flash("Successfully Logged Out!")
+        session.pop('username')
+    return redirect(url_for('home'))
+
+if __name__ == "__main__":
+    app.secret_key = 'merasecret'
+    app.run(debug = True)
