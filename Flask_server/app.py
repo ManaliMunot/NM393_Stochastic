@@ -55,3 +55,14 @@ def login():
 @app.route('/details')
 def read_more():
     return render_template('details.html')
+
+
+
+@app.route('/adminDashboard')
+def adminDashboard():
+    if 'username' in session:
+        username = session['username']
+
+        return redirect(url_for('admin_display'))
+
+    return redirect(url_for('login'))
