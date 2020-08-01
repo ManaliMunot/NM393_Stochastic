@@ -46,3 +46,16 @@ classes = { 1:'Speed limit (20km/h)',
            41:'Roundabout mandatory',
            42:'End of no passing',
            43:'End no passing veh > 3.5 tons' }
+
+def classify(file_path):
+    global label_packed
+    image = Image.open(file_path)
+    image = image.resize((30,30))
+    image = numpy.expand_dims(image, axis=0)
+    image = numpy.array(image)
+    pred = model.predict_classes([image])[0]
+    sign = classes[pred+1]
+    #print(sign)
+    return sign
+
+if __name__ == "__main__": print(classify('00014.ppm'))
