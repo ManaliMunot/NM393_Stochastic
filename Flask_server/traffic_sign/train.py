@@ -67,3 +67,32 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 epochs = 15
 history = model.fit(X_train, y_train, batch_size=32, epochs=epochs, validation_data=(X_test, y_test))
 model.save("my_model.h5")
+
+
+
+plt.plot(history.history['accuracy'], label='training accuracy')
+plt.plot(history.history['val_accuracy'], label='val accuracy')
+plt.title('Accuracy')
+plt.xlabel('epochs')
+plt.ylabel('accuracy')
+plt.legend()
+plt.show()
+
+plt.figure(1)
+plt.plot(history.history['loss'], label='training loss')
+plt.plot(history.history['val_loss'], label='val loss')
+plt.title('Loss')
+plt.xlabel('epochs')
+plt.ylabel('loss')
+plt.legend()
+plt.show()
+
+#testing accuracy on test dataset
+from sklearn.metrics import accuracy_score
+
+y_test = pd.read_csv('Test.csv')
+
+labels = y_test["ClassId"].values
+imgs = y_test["Path"].values
+
+data=[]
