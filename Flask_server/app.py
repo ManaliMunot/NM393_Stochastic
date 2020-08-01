@@ -50,3 +50,8 @@ def login():
         return redirect(url_for('login'))
 
     return render_template('login.html')
+
+
+@app.route('/details')
+def read_more():
+    return render_template('details.html')
