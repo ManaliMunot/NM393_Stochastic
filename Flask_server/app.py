@@ -66,3 +66,18 @@ def adminDashboard():
         return redirect(url_for('admin_display'))
 
     return redirect(url_for('login'))
+
+
+@app.route('/admin_display')
+def admin_display():
+    if 'username' in session:
+        username = session['username']
+
+        images = mongo.db.user_images.find({'isVerified':0})
+        user_count = mongo.db.users.find().count()
+        grievances_count = mongo.db.user_images.find().count()
+
+
+        return render_template('admin_display.html', value_username = username, dbentry = images, u_count = user_count, g_count = grievances_count)
+    else:
+        return redirect(url_for('login'))
