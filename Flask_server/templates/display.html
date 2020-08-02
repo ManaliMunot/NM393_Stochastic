@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	 <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap-social/bootstrap-social.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="css/styles.css" /> -->
+    <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+	<!-- responsive style -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+
+   <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <title>Login Page</title>
+<style>body { padding-top:30px; }
+.widget .panel-body { padding:0px; }
+.widget .list-group { margin-bottom: 0; }
+.widget .panel-title { display:inline }
+.widget .label-info { float: right; }
+.widget li.list-group-item {border-radius: 0;border: 0;border-top: 1px solid #ddd;}
+.widget li.list-group-item:hover { background-color: rgba(86,61,124,.1); }
+.widget .mic-info { color: #666666;font-size: 11px; }
+.widget .action { margin-top:5px; }
+.widget .comment-text { font-size: 12px; }
+.widget .btn-block { border-top-left-radius:0px;border-top-right-radius:0px; }
+     .mfp-no-margins img.mfp-img {
+	padding: 0;
+}
+
+    /*
+    Image credits:
+    uifaces.com (http://uifaces.com/authorized)
+*/
+
+.button_highlight:hover{
+	 background-color: white;
+}
+
+.button_highlight{
+	background-color: orange;
+	border: none;
+	color : black;
+	padding:  : 10px;
+	text-align: :center;
+	display: inline-block;
+	text-decoration: none;
+	font-size: 15px;
+	border-radius:100px;
+
+}
+
+.notes {
+    color: #999;
+    font-size: 12px;
+}
+.media .media-object { max-width: 180px;
+	align-items: center;
+	align-content: center;
+	align-self: center;
+
+    }
+    .media
+    {
+        border-bottom: 1px solid black;
+
+
+    }
+.media-body { position: relative;
+     padding-left: 30px;
+
+}
+.media-date {
+    position: absolute;
+    right: 25px;
+    top: 25px;
+}
+.media-comment
+{
+	padding-bottom: 0px;
+}
+.tab-content b{
+	line-height: 50%;
+}
+.btn-circle {
+    font-weight: bold;
+    font-size: 12px;
+    padding: 6px 15px;
+    border-radius: 20px;
+}
+.btn-circle span { padding-right: 6px; }
+.embed-responsive { margin-bottom: 20px; }
+.tab-content {
+    padding: 50px 15px;
+    border: 1px solid #ddd;
+    border-top: 0;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.custom-input-file {
+    overflow: hidden;
+    position: relative;
+    width: 120px;
+    height: 120px;
+    background: #eee url('https://s3.amazonaws.com/uifaces/faces/twitter/walterstephanie/128.jpg');
+    background-size: 120px;
+    border-radius: 120px;
+}
+input[type="file"]{
+    z-index: 999;
+    line-height: 0;
+    font-size: 0;
+    position: absolute;
+    opacity: 0;
+    filter: alpha(opacity = 0);-ms-filter: "alpha(opacity=0)";
+    margin: 0;
+    padding:0;
+    left:0;
+}
+
+
+    </style>
+</head>
+<body class="hero_area sub_pages">
+	<div class="overlay"></div>
+	<div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
+          <a class="navbar-brand" href="/uDashboard">
+            <img src="{{url_for('static', filename= 'images/code.png')}}" alt="" /><span>
+              TEAM STOCHASTIC
+            </span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+
+            <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
+
+             <a class="navbar-brand" href=""> <span>Welcome,{{value_username	}}</span></a>
+            <div class="quote_btn-container ml-lg-4 d-flex justify-content-center">
+
+              <a href="/sign_out" class="text-uppercase custom_orange-btn mr-3">
+                             Sign Out
+
+              </a>
+                </div>
+
+          </div>
+        </nav>
+      </div>
+    </header>
+
+
+
+       <div class="container">
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1" id="logout">
+
+        <div class="comment-tabs">
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="comments-logout">
+                    <ul class="media-list">
+										{% for entries in dbentry %}
+											<li class="media">
+
+                          <a href="{{url_for('file', filename=entries['userImage_name'] )}}" target="_blank"><center><img class="media-object text-center" src="{{url_for('file', filename=entries['userImage_name'] )}}" alt="profile"></center></a>
+
+
+                        <div class="media-body">
+                          <div class="well well-lg" style="padding-bottom : 0px">
+                              <h4 class="media-heading text-uppercase reviews"> <b> {{entries['imgCategory']}} </b></h4>
+
+
+															<p class="media-comment pull-left" >
+                                {{entries['imgDescription']}}
+                              </p>
+
+
+																{% if entries['isVerified'] == -1 %}
+
+																			<p class="media-comment pull-right" style="color:red;">Not Valid</p><br><br>
+																			<p class="media-comment pull-left" >
+				                                <b>Keywords :</b> {% print ', '.join(entries['key_highlight']) %} </p>
+																			<div class="text-right">
+				                              <a class="btn btn-info btn-circle text-uppercase" href="./resubmit?_id={{ entries['_id'] }}" id="reply"> Edit</a>
+
+																			<!-- Admin -->
+																			<!-- <button type="button" class="btn btn-success" aria-label="Left Align">
+				  														<span class="glyphicon glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+																			<button type="button" class="btn btn-danger" aria-label="Left Align">
+				  														<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span></button> -->
+
+																			</div>
+
+
+																{% elif entries['isVerified'] == 0 %}
+
+																				<p class="media-comment pull-right" style="color:orange;">In Verification</p><br><br>
+																				<p class="media-comment pull-left" >
+					                                <b>Keywords :</b>
+
+																					{% for item in entries['key_highlight'] %}
+																					<button class="button_highlight" disabled>
+																						{{item}}
+																						</button>
+																					{% endfor %}
+																			 </p>
+																			 <br><br>
+			 																		<p class="media-comment text-left" style="line-height: 22px;"> <b> Captions :</b>
+
+																						<!-- <br>esrtyjukjgfdsfrgthyjuhkjhgfdsfdhjkjhgrfd<br>
+			 																				esrtyjukjgfdsfrgthyjuhkjhgfdsfdhjkjhgrfd<br>
+			 																				esrtyjukjgfdsfrgthyjuhkjhgfdsfdhjkjhgrfd -->
+																							<ul style="list-style-type:disc">
+																							{% if entries['captions'] %}
+																							  {% for caps in entries['captions'] %}
+
+																							 <li>{{caps}}</li>
+
+																							   {% endfor %}
+																							 {% endif %}
+																						 </ul>
+																						</p>
+
+
+																{% elif entries['isVerified'] == 1 %}
+
+																					<p class="media-comment pull-right" style="color:green;">Verified</p><br><br>
+																					<p class="media-comment pull-left" >
+						                               <b>Keywords :</b> {% print ', '.join(entries['key_highlight']) %} </p>
+
+																{% else %}
+
+																					<p class="media-comment pull-right" style="color:red;">Not Found</p><br><br>
+																					<p class="media-comment pull-left" >
+						                                <b>Keywords :</b> {% print ', '.join(entries['key_highlight']) %} </p>
+
+																{% endif %}
+
+
+
+                          </div>
+                        </div>
+                      </li>
+											{% endfor %}
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+	</div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="js/form-script.js"></script>
+</body>
+</html>
