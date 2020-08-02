@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <script type="text/javascript">window.setTimeout("document.getElementById('successMessage').style.display='none';", 2000); </script>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>SIH 2020</title>
+
+  <!-- slider stylesheet -->
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{{ url_for('static', filename='css/responsive.css') }}" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
+          <a class="navbar-brand" href="/">
+            <img src="{{url_for('static', filename= 'images/code.png')}}" alt="" /><span>
+              TEAM STOCHASTIC
+            </span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
+
+
+            <div class="quote_btn-container ml-0 ml-lg-4 d-flex justify-content-center">
+              <a href="signup" class="text-uppercase custom_orange-btn mr-3">
+                             Sign Up
+
+              </a>
+                </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+    <!-- slider section -->
+    <section class=" slider_section position-relative">
+      <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="slider_item-box">
+              <div class="slider_item-container">
+                <div class="container">
+                  {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                      {% for msg in messages %}
+                      <div id="successMessage" class="alert alert-success mb-3" role="alert">
+                        {{ msg }}
+                      </div>
+                      {% endfor %}
+                    {% endif %}
+                  {% endwith %}
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="slider_item-detail">
+                        <div>
+                          <h1>
+                           ML Powered <br />
+                            Image Classifier
+                          </h1>
+                          <p>
+                                Our ML powered image classifier will help to classify and verify its description.
+                                The description will be identified and it's intent will be analyzed in the form of keywords.
+                                The information from the image and keywords from text will be used to validate the given information.
+                          </p>
+
+                        <div class="d-flex">
+                            <a href="/login" class="text-uppercase custom_orange-btn mr-3">
+                              Login
+                            </a>
+                    <a href="details" class="text-uppercase custom_dark-btn">
+                              Read more
+                            </a>
+                       </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-5 offset-1">
+                      <div class="slider_img-box">
+                        <div>
+                          <img src="{{url_for('static', filename= 'images/machine-learning5.png')}}" alt="" class="" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+        </div>
+      </div>
+    </section>
+
+
+
+
+    </div>
+</body>
+
+</html>
