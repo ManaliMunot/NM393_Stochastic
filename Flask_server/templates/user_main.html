@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>User</title>
+
+  <!-- slider stylesheet -->
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
+
+  <!-- bootstrap core css -->
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- responsive style -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style> .blink {
+      animation: blink 2s steps(5, start) infinite;
+      -webkit-animation: blink 1s steps(5, start) infinite;
+        color: #fc5d35;
+    }
+    @keyframes blink {
+      to {
+        visibility: hidden;
+      }
+    }
+    @-webkit-keyframes blink {
+      to {
+        visibility: hidden;
+      }
+    }</style>
+</head>
+
+<body>
+  <div class="hero_area sub_pages">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
+          <a class="navbar-brand" href="">
+            <img src="{{url_for('static', filename= 'images/code.png')}}" alt="" /><span>
+              TEAM STOCHASTIC
+            </span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+
+            <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
+
+             <a class="navbar-brand" href=""> <span>Welcome,  {{value_username}}</span></a>
+            <div class="quote_btn-container ml-lg-4 d-flex justify-content-center">
+
+              <a href="/sign_out" class="text-uppercase custom_orange-btn mr-3">
+                             Sign Out
+
+              </a>
+                </div>
+
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+
+  </div>
+
+
+  <!-- service section -->
+
+  <section class="service_section layout_padding " style="background-color: #f7f7f7;">
+    <div class="container">
+      <h2 class="custom_heading">Approach Details :   {{ utype }}</h2>
+      <p class="custom_heading-text">
+        Details about the system are mentioned below :
+      </p>
+      <div class=" layout_padding2">
+        <div class="card-deck">
+          <div class="card">
+            <img class="card-img-top" src="{{url_for('static', filename= 'images/submit.svg')}}" alt="Card image cap" />
+            <div class="card-body">
+              <h5 class="card-title">Submit new grievances</h5>
+              <p class="card-text">
+                 &nbsp; For submitting new grievances click the following button  <br><br>
+                  <a href="/user">  <i class="fa fa-angle-right  fa-2x" style="color: #fc5d35;"></i>
+                      <i class="fa fa-angle-right blink fa-2x"></i>
+                    <i class="fa fa-angle-right blink fa-2x"></i>
+                      <i class="fa fa-angle-right blink fa-2x"></i>
+                      <i class="fa fa-angle-right blink fa-2x"></i>
+                  </a>
+              </p>
+            </div>
+          </div>
+          <div class="card">
+            <img class="card-img-top" src="{{url_for('static', filename= 'images/check.svg')}}" alt="Card image cap" />
+            <div class="card-body">
+              <h5 class="card-title">Check Previous Status</h5>
+              <p class="card-text">
+                &nbsp; For checking the status of previous grievances click the following button<br>
+                  <a href="/display">  <i class="fa fa-angle-right  fa-2x" style="color: #000000"></i>
+                      <i class="fa fa-angle-right blink fa-2x" style="color: #000000"></i>
+                    <i class="fa fa-angle-right blink fa-2x" style="color: #000000"></i>
+                      <i class="fa fa-angle-right blink fa-2x" style="color: #000000"></i>
+                      <i class="fa fa-angle-right blink fa-2x" style="color: #000000"></i>
+                  </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- end service section -->
+
+
+
+
+
+
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+
+  <script>
+    // This example adds a marker to indicate the position of Bondi Beach in Sydney,
+    // Australia.
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 11,
+        center: {
+          lat: 40.645037,
+          lng: -73.880224
+        },
+      });
+
+      var image = 'images/maps-and-flags.png';
+      var beachMarker = new google.maps.Marker({
+        position: {
+          lat: 40.645037,
+          lng: -73.880224
+        },
+        map: map,
+        icon: image
+      });
+    }
+  </script>
+  <!-- google map js -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8eaHt9Dh5H57Zh0xVTqxVdBFCvFMqFjQ&callback=initMap">
+  </script>
+  <!-- end google map js -->
+</body>
+
+</html>
