@@ -69,3 +69,60 @@ def evaluate_model(sess, model, global_step, summary_writer, summary_op):
 
   perplexity = math.exp(sum_losses / sum_weights)
   tf.logging.info("Perplexity = %f (%.2g sec)", perplexity, eval_time)
+
+  summary = tf.Summary()
+  value = summary.value.add()
+  value.simple_value = perplexity
+  value.tag = "Perplexity"
+  summary_writer.add_summary(summary, global_step)
+
+  # Write the Events file to the eval directory.
+  summary_writer.flush()
+  tf.logging.info("Finished processing evaluation at global step %d.",
+                  global_step)
+
+def run_once(model, saver, summary_writer, summary_op):
+  """Evaluates the latest model checkpoint.
+
+  Args:
+    model: Instance of ShowAndTellModel; the model to evaluate.
+    saver: Instance of tf.train.Saver for restoring model Variables.
+    summary_writer: Instance of FileWriter.
+    summary_op: Op for generating model summaries.
+  """
+  model_path = tf.train.latest_checkpoint(FLAGS.checkpoint_dir)
+  if not model_path:
+    tf.logging.info("Skipping evaluation. No checkpoint found in: %s",
+                    FLAGS.checkpoint_dir)
+    return
+
+  with tf.Session() as sess:
+    # Load model from checkpoint.
+    tf.logging.info("Loading model from checkpoint: %s", model_path)
+    saver.restore(sess, model_path)
+    global_step = tf.train.global_step(sess, model.global_step.name)
+    tf.logging.info("Successfully loaded %s at global step = %d.",
+                    os.path.basename(model_path), global_step)
+    if global_step < FLAGS.min_global_step:
+      tf.logging.info("Skipping evaluation. Global step = %d < %d", global_step,
+                      FLAGS.min_global_step)
+      return
+
+    # Start the queue runners.
+    coord = tf.train.Coordinator()
+    threads = tf.train.start_queue_runners(coord=coord)
+
+    # Run evaluation on the latest checkpoint.
+    try:
+      evaluate_model(
+          sess=sess,
+          model=model,
+          global_step=global_step,
+          summary_writer=summary_writer,
+          summary_op=summary_op)
+    except Exception as e:  # pylint: disable=broad-except
+      tf.logging.error("Evaluation failed.")
+      coord.request_stop(e)
+
+    coord.request_stop()
+    coord.join(threads, stop_grace_period_secs=10)
