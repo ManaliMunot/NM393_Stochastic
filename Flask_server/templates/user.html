@@ -3,6 +3,7 @@
 
 <head>
   <!-- Basic -->
+  <script type="text/javascript">window.setTimeout("document.getElementById('successMessage').style.display='none';", 2000); </script>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <!-- Mobile Metas -->
@@ -15,28 +16,28 @@
   <title>User</title>
 
   <!-- slider stylesheet -->
-  <link rel="stylesheet" type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
 
-  <!-- fonts style -->
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet" />
-  <!-- Custom styles for this template -->
-  <link href="css/style.css" rel="stylesheet" />
-  <!-- responsive style -->
-  <link href="css/responsive.css" rel="stylesheet" />
-</head>
-    
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- responsive style -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+  </head>
+
 <body>
   <div class="hero_area sub_pages">
-  
-  
-    <!-- header section -->
+    <!-- header section strats -->
     <header class="header_section">
       <div class="container">
         <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
-          <a class="navbar-brand" href="">
-            <img src="images/code.png" alt="" /><span>
+          <a class="navbar-brand" href="/uDashboard">
+            <img src="{{url_for('static', filename= 'images/code.png')}}" alt="" /><span>
               TEAM STOCHASTIC
             </span>
           </a>
@@ -45,78 +46,134 @@
             <span class="navbar-toggler-icon"></span>
           </button>
 
-        
+
             <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
-              
-             <a class="navbar-brand" href=""> <span>Welcome, User</span></a>
+
+             <a class="navbar-brand" href=""> <span>Welcome, {{value_username}}</span></a>
             <div class="quote_btn-container ml-lg-4 d-flex justify-content-center">
-               
-              <a href="index.html" class="text-uppercase custom_orange-btn mr-3">
+
+              <a href="/sign_out" class="text-uppercase custom_orange-btn mr-3">
                              Sign Out
-        
+
               </a>
                 </div>
-        
+
           </div>
         </nav>
       </div>
-    </header>  </div>
-    
+    </header>
+    <!-- end header section -->
+
+  </div>
+
+
+
+  <!-- contact section -->
     <section class="contact_section layout_padding">
-    <div class="container">
-      <h2 class="font-weight-bold">
-        Submit your Grievances
-      </h2>
-      <div class="row">
-        <div class="col-md-8 mr-auto">
-          <form action="">
-            <div class="contact_form-container">
-              <div>
+      <div class="container">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for msg in messages %}
+            <div id="successMessage" class="alert alert-success mb-3" role="alert">
+              {{ msg }}
+            </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        <h2 class="font-weight-bold">
+          Submit your Grievances
+        </h2>
+        <div class="row">
+          <div class="col-md-8 mr-auto">
+            <form name="frmImage" enctype="multipart/form-data" action="/to_db" method="POST">
+              <div class="contact_form-container">
                 <div>
-                    <label>Upload the image</label>
-                  <input type="file" placeholder="Upload image" required>
-                </div>
-                  
-                  
-                <div class="mt-5">
-                    <label>Describe Your Complaint</label>
-                  <input type="text" placeholder="Describe your complaint">
+                  <div>
+                      <label>Upload the image</label>
+                    <input type="file" placeholder="Upload image" name="userImage" required>
                   </div>
+
+
                   <div class="mt-5">
-                
-                      <label>Category</label>
- 
-    
-                    <select class="custom-select">
-                    <option value="0">Agriculture</option>
-                    <option value="1">Forestry</option>
-                    <option value="2">E-governance</option>
-                    <option value="3">Water</option>
-                    <option value="4">Tourism</option>
-                    <option value="5">Urban</option>
-                    <option value="6">Rural</option>
-                    </select>
+                      <label>Describe Your Complaint</label>
+
+                    <input type="text" placeholder="Describe your complaint" name='description'>
+                  </div>
+
+                    <div class="mt-5">
+
+      <label>Category</label>
+
+
+      <select class="custom-select" name="category" required>
+                      <option value="">Select Category</option>
+                      <option value="Agriculture">Agriculture</option>
+                      <option value="Forestry">Forestry</option>
+                      <option value="governance">E-governance</option>
+                      <option value="Water">Water</option>
+          <option value="Tourism">Tourism</option>
+          <option value="Urban">Urban</option>
+          <option value="Rural">Rural</option>
+                      </select>
+
+
+                    </div>
+
+
+
+
+                  <div class="mt-5">
+                    <button type="submit" name="submit">
+  				Send
+  				</button>
+
 
 
                   </div>
-                  
-                  
- 
-                  
-                <div class="mt-5">
-                  <button type="submit">
-                    send
-                  </button>
                 </div>
+
               </div>
-              </div>
+
             </form>
           </div>
         </div>
-        </div>
+      </div>
     </section>
-    
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8eaHt9Dh5H57Zh0xVTqxVdBFCvFMqFjQ&callback=initMap">
+    <!-- end contact section -->
+
+
+
+
+
+
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+
+    <script>
+    // This example adds a marker to indicate the position of Bondi Beach in Sydney,
+    // Australia.
+    function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 11,
+        center: {
+          lat: 40.645037,
+          lng: -73.880224
+        },
+      });
+
+      var image = 'images/maps-and-flags.png';
+      var beachMarker = new google.maps.Marker({
+        position: {
+          lat: 40.645037,
+          lng: -73.880224
+        },
+        map: map,
+        icon: image
+      });
+    }
+  </script>
+  <!-- google map js -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8eaHt9Dh5H57Zh0xVTqxVdBFCvFMqFjQ&callback=initMap">
   </script>
   <!-- end google map js -->
 </body>
