@@ -89,3 +89,38 @@
                   {% endfor %}
                 {% endif %}
               {% endwith %}
+                
+                <label class="font-weight-bold">Email <span class="text-danger">*</span></label>
+              <input type="email" name="email" id="email" class="form-control" placeholder="Enter valid email" required>
+            </div>
+            <div class="form-group">
+              <label class="font-weight-bold">Password <span class="text-danger">*</span></label>
+              <input type="password" name="password" id="password" class="form-control" placeholder="***********" required>
+            </div>
+              <div class="form-group">
+                    <label ><input type="radio" name="Login" value="u"checked>&nbsp;Login As User</label> &emsp;
+                    <label><input type="radio" name="Login" value="a">&nbsp;Login As Admin</label>
+              </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col">
+                  <label><input type="checkbox" name="condition" id="condition"> Remember me.</label>
+                </div>
+                <div class="col text-right"> <a href="javascript:;" data-toggle="modal" data-target="#forgotPass">Forgot Password?</a> </div>
+              </div>
+            </div>
+            <div class="form-group">
+                <div class="text-center">
+                   <input type="submit" name="submit" value="Sign In" class="custom_orange-btn mr-3" >
+                 </div>
+            </div>
+              <br>
+              <div class="form-group">
+                  <div class="col text-center"> <a href="/signup" >Don't Have an Account? Signup now</a> </div>
+              </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
