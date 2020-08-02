@@ -84,6 +84,77 @@
         </nav>
       </div>
     </header>
+           <!-- end header section -->
+
+    <div class="container mt-2 mb-4">
+  <div class="col-sm-8 ml-auto mr-auto">
+    <div class="nav nav-pills nav-fill mb-1" id="pills-tab" role="tablist">
+      <div class="nav-item"> <a class="nav-link active" style="color: #f7f7f7; background-color: #fc5d35;" id="pills-signup-tab" data-toggle="pill" href="#pills-signup" role="tab" aria-controls="pills-signup" aria-selected="true">Sign Up</a> </div>
+
+    </div>
+    <div class="tab-content" id="pills-tabContent">
+
+      <div class="tab-pane fade show active" id="pills-signup" role="tabpanel" aria-labelledby="pills-signup-tab">
+        <div class="col-sm-12 border border-primary shadow rounded pt-2">
+          <div class="text-center">
+           <span class="fa-stack fa-3x">
+                <i class="fa fa-circle-thin fa-stack-2x"></i>
+               <i class="fa fa-user-plus fa-stack-1x"></i>
+            </span>
+             </div>
+            <form method="post" id="singnupFrom">
+            <div class="form-group">
+
+              {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                  <!-- {% for msg in messages %} -->
+                  <div id="successMessage" class="alert alert-info mb-3" role="alert">
+                    {{ msg }}
+                  </div>
+                  <!-- {% endfor %} -->
+                {% endif %}
+              {% endwith %}
+
+              <label class="font-weight-bold">Email <span class="text-danger">*</span></label>
+              <input type="email" name="signupemail" id="signupemail" class="form-control" placeholder="Enter valid email" required>
+            </div>
+            <div class="form-group">
+              <label class="font-weight-bold">User Name <span class="text-danger">*</span></label>
+              <input type="text" name="signupusername" id="signupusername" class="form-control" placeholder="Choose your user name" required>
+              <div class="text-danger"><em>This will be your login name!</em></div>
+            </div>
+            <div class="form-group">
+              <label class="font-weight-bold">Phone #</label>
+              <input type="text" name="signupphone" id="signupphone" class="form-control" placeholder="(000)-(0000000)">
+            </div>
+            <div class="form-group">
+              <label class="font-weight-bold">Password <span class="text-danger">*</span></label>
+              <input type="password" name="signuppassword" id="signuppassword" class="form-control" placeholder="***********" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 6 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;"
+                required>
+            </div>
+            <div class="form-group">
+              <label class="font-weight-bold">Confirm Password <span class="text-danger">*</span></label>
+              <input type="password" name="signupcpassword" id="signupcpassword" class="form-control" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" placeholder="***********" required>
+            </div>
+            <div class="form-group">
+              <label><input type="checkbox" name="signupcondition" id="signupcondition"  required> I agree with the <a href="javascript:;">Terms &amp; Conditions</a> for Registration.</label>
+            </div>
+            <div class="form-group">
+            <div class="text-center">
+              <input type="submit" name="signupsubmit" value="Sign Up" class="custom_orange-btn mr-3">
+             </div>
+            </div><br>
+              <div class="form-group">
+                  <div class="col text-center"> <a href="/login" >Already Have an Account? Signin now</a> </div>
+              </div>
+          </form>
+            </div>
+      </div>
+    </div>
+  </div>
+
+
+  </div>
       </div>
       
 
