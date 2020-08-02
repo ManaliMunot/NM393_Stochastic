@@ -1,17 +1,28 @@
 from flask import Flask, render_template, request, redirect, session, url_for, jsonify,flash
 from flask_bootstrap import Bootstrap
 import os
+from bson import ObjectId # For ObjectId to work
 from traffic_sign import *
 from werkzeug.utils import secure_filename
 from flask_pymongo import PyMongo
+import bcrypt
 
 app = Flask(__name__)
 
-app.config["MONGO_URI"] = "mongodb://localhost:27017/db_images"
+UPLOAD_FOLDER = './uploads'
+path = 'E:/SIH/Flask-ISRO/Flask_server/uploads/'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif','ppm'}
 
+app.config["MONGO_URI"] = "mongodb://localhost:27017/db_images"
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 mongo = PyMongo(app)
 Bootstrap(app)
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @app.route('/')
@@ -86,31 +97,48 @@ def Signup():
 @app.route('/details')
 def read_more():
     return render_template('details.html')
-#
-#
-# @app.route('/adminDashboard')
-# def adminDashboard():
-#     if 'username' in session:
-#         username = session['username']
-#
-#         return redirect(url_for('admin_display'))
-#
-#     return redirect(url_for('login'))
 
 
-# @app.route('/admin_display')
-# def admin_display():
-#     if 'username' in session:
-#         username = session['username']
-#
-#         images = mongo.db.user_images.find({'isVerified':0})
-#         user_count = mongo.db.users.find().count()
-#         grievances_count = mongo.db.user_images.find().count()
-#
-#
-#         return render_template('admin_display.html', value_username = username, dbentry = images, u_count = user_count, g_count = grievances_count)
-#     else:
-#         return redirect(url_for('login'))
+@app.route('/adminDashboard')
+def adminDashboard():
+    if 'username' in session:
+        username = session['username']
+
+        return redirect(url_for('admin_display'))
+
+    return redirect(url_for('login'))
+
+
+@app.route('/admin_display')
+def admin_display():
+    if 'username' in session:
+        username = session['username']
+
+        images = mongo.db.user_images.find({'isVerified':0})
+        user_count = mongo.db.users.find().count()
+        grievances_count = mongo.db.user_images.find().count()
+
+
+        return render_template('admin_display.html', value_username = username, dbentry = images, u_count = user_count, g_count = grievances_count)
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/verify', methods=["POST"])
+def verify():
+    oid = request.form['id']
+    # isVerify = int(request.values.get('name'))
+    mongo.db.user_images.update({"_id" : ObjectId(oid)}, {"$set": {'isVerified':1}}, upsert=True)
+
+    return jsonify({'result' : 'success'})
+
+@app.route('/verify_not', methods=["POST"])
+def verify_not():
+    oid = request.form['id']
+    # isVerify = int(request.values.get('name'))
+    mongo.db.user_images.update({"_id" : ObjectId(oid)}, {"$set": {'isVerified':-1}}, upsert=True)
+
+    return jsonify({'result' : 'success'})
 
 
 @app.route('/user', methods=['GET','POST'])
@@ -139,6 +167,54 @@ def upload_demo():
 #         flash("Successfully Logged Out!")
 #         session.pop('username')
 #     return redirect(url_for('home'))
+
+
+@app.route('/to_db',methods=['POST'])
+def to_db():
+    if 'userImage' in request.files:
+        imgDesc = request.form["description"]
+        imgCat = request.form["category"]
+        file = request.files['userImage']
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            caption_dict = run(path+filename)
+            os.remove(path+filename)
+
+            captions = []
+            for value in caption_dict.values():
+                captions.append(value[0])
+        extractor = KeywordExtractor()
+        extractor.analyze(imgDesc, candidate_pos = ['NOUN', 'PROPN','VERB'], window_size=4, lower=False)
+        highlights = extractor.get_keywords(12)
+
+        mongo.save_file(filename, file)
+        mongo.db.user_images.insert_one({'uname':session['username'], 'userImage_name': filename,'imgDescription' : imgDesc ,'imgCategory' : imgCat,
+                                            'isValidated':0,'isVerified':0, 'captions': captions})
+
+        flash("Image Uploaded")
+        return redirect(url_for('upload_image'))
+
+@app.route('/file/<filename>')
+def file(filename):
+    return mongo.send_file(filename)
+
+
+@app.route('/uDashboard')
+def uDashboard():
+    if 'username' in session:
+        username = session['username']
+        return render_template('user_main.html',value_username= username)
+    else:
+        return redirect(url_for('login'))
+
+
+
+
 
 
 if __name__ == "__main__":
