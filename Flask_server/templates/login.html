@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" type="text/css"
     href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
-    <!-- bootstrap core css -->
+
+  <!-- bootstrap core css -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
 
   <!-- fonts style -->
@@ -30,9 +31,12 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
     <title>SIH</title>
-    
-<!-- header section strats -->
+  </head>
+  <body class="hero_area sub_pages">
+       <div>
+    <!-- header section strats -->
    <header class="header_section">
       <div class="container">
         <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
@@ -62,6 +66,7 @@
       </div>
     </header>
     <!-- end header section -->
+
     <div class="container mt-2 mb-4">
   <div class="col-sm-8 ml-auto mr-auto">
     <div class="nav nav-pills nav-fill mb-1" id="pills-tab" role="tablist">
@@ -77,8 +82,7 @@
                <i class="fa fa-user fa-stack-1x"></i>
             </span>
              </div>
-            
-    <form method="post" id="singninFrom">
+          <form method="post" id="singninFrom">
             <div class="form-group">
               {% with messages = get_flashed_messages() %}
                 {% if messages %}
@@ -89,8 +93,9 @@
                   {% endfor %}
                 {% endif %}
               {% endwith %}
-                
-                <label class="font-weight-bold">Email <span class="text-danger">*</span></label>
+
+
+              <label class="font-weight-bold">Email <span class="text-danger">*</span></label>
               <input type="email" name="email" id="email" class="form-control" placeholder="Enter valid email" required>
             </div>
             <div class="form-group">
@@ -124,3 +129,39 @@
 
     </div>
   </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="forgotPass" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <form method="post" id="forgotpassForm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Forgot Password</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Email <span class="text-danger">*</span></label>
+              <input type="email" name="forgotemail" id="forgotemail" class="form-control" placeholder="Enter your valid email..." required>
+            </div>
+            <div class="form-group">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" style="color: #f7f7f7; background-color: #fc5d35;">Sign In</button>
+            <button type="submit" name="forgotPass" class="btn btn-primary" style="color: #f7f7f7; background-color: #fc5d35;"><i class="fa fa-envelope"></i> Send Request</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
+    <!-- Optional JavaScript -->
+      </div>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="js/form-script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  </body>
+  </html>
