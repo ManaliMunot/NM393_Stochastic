@@ -1,31 +1,37 @@
 from flask import Flask, render_template, request, redirect, session, url_for, jsonify,flash
 from flask_bootstrap import Bootstrap
-import os
 from bson import ObjectId # For ObjectId to work
 from key_extract.keyword_extractor import *
+import os
 from caption_gen.get_caption import *
-from traffic_sign import *
-from werkzeug.utils import secure_filename
-from flask_pymongo import PyMongo
+# from flask_paginate import Pagination, get_page_parameter
 import bcrypt
-
-app = Flask(__name__)
+from werkzeug.utils import secure_filename
+# from trafic_sign.classifier import *
+from flask_pymongo import PyMongo
 
 UPLOAD_FOLDER = './uploads'
 path = 'E:/SIH/Flask-ISRO/Flask_server/uploads/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif','ppm'}
 
+app = Flask(__name__)
+
 app.config["MONGO_URI"] = "mongodb://localhost:27017/db_images"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+
 mongo = PyMongo(app)
 Bootstrap(app)
-
+#--------------------------------------------------------------------------------
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
+
+
+#--------------------------------------------------------------------------------
 
 @app.route('/')
 def home():
@@ -95,10 +101,10 @@ def Signup():
     return render_template('signup.html')
 
 
-
 @app.route('/details')
 def read_more():
     return render_template('details.html')
+
 
 
 @app.route('/adminDashboard')
@@ -120,9 +126,11 @@ def admin_display():
         user_count = mongo.db.users.find().count()
         grievances_count = mongo.db.user_images.find().count()
 
+
         return render_template('admin_display.html', value_username = username, dbentry = images, u_count = user_count, g_count = grievances_count)
     else:
         return redirect(url_for('login'))
+
 
 
 @app.route('/verify', methods=["POST"])
@@ -142,6 +150,9 @@ def verify_not():
     return jsonify({'result' : 'success'})
 
 
+
+
+
 @app.route('/user', methods=['GET','POST'])
 def upload_image():
     if 'username' in session:
@@ -149,20 +160,6 @@ def upload_image():
         return render_template('user.html',value_username= username)
     else:
         return redirect(url_for('login'))
-
-
-@app.route('/upload_demo',methods=['POST'])
-def upload_demo():
-    if 'imageFile' in request.files:
-
-        classifier.run()
-    return render_template('upload_demo')
-
-
-#
-# @app.route('/file/<filename>')
-# def file(filename):
-#     return mongo.send_file(filename)
 
 
 @app.route('/to_db',methods=['POST'])
@@ -184,13 +181,14 @@ def to_db():
             captions = []
             for value in caption_dict.values():
                 captions.append(value[0])
+
         extractor = KeywordExtractor()
         extractor.analyze(imgDesc, candidate_pos = ['NOUN', 'PROPN','VERB'], window_size=4, lower=False)
         highlights = extractor.get_keywords(12)
 
         mongo.save_file(filename, file)
         mongo.db.user_images.insert_one({'uname':session['username'], 'userImage_name': filename,'imgDescription' : imgDesc ,'imgCategory' : imgCat,
-                                            'isValidated':0,'isVerified':0, 'captions': captions})
+                                            'isValidated':0,'isVerified':0, 'captions': captions,'key_highlight':highlights})
 
         flash("Image Uploaded")
         return redirect(url_for('upload_image'))
@@ -200,6 +198,7 @@ def file(filename):
     return mongo.send_file(filename)
 
 
+
 @app.route('/uDashboard')
 def uDashboard():
     if 'username' in session:
@@ -207,7 +206,6 @@ def uDashboard():
         return render_template('user_main.html',value_username= username)
     else:
         return redirect(url_for('login'))
-
 
 
 @app.route('/display')
@@ -222,7 +220,6 @@ def display():
         return redirect(url_for('login'))
 
 
-
 @app.route('/resubmit',methods=['POST','GET'])
 def user_resubmit():
 
@@ -233,8 +230,8 @@ def user_resubmit():
 
         return render_template('user_resubmit.html',value_username= username, image = get_detail)
 
-    return redirect(url_for('login'))
 
+    return redirect(url_for('login'))
 
 
 
@@ -260,6 +257,7 @@ def reupload_grievances():
 
 
 
+#  Done
 @app.route('/sign_out')
 def sign_out():
     if "username" in session:
@@ -267,8 +265,6 @@ def sign_out():
         session.pop('username')
     return redirect(url_for('home'))
 
-
-
 if __name__ == "__main__":
-    app.secret_key = 'AIzaSyA8eaHt9Dh5H57Zh0xVTqxVdBFCvFMqFjQ'
+    app.secret_key = 'merasecret'
     app.run(debug = True)
