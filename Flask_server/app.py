@@ -13,7 +13,6 @@ mongo = PyMongo(app)
 Bootstrap(app)
 
 
-
 @app.route('/')
 def home():
     if 'username' in session:
@@ -87,11 +86,9 @@ def read_more():
     return render_template('details.html')
 
 
-
 @app.route('/details')
 def read_more():
     return render_template('details.html')
-
 
 
 @app.route('/adminDashboard')
@@ -133,14 +130,12 @@ def file(filename):
     return mongo.send_file(filename)
 
 
-
 @app.route('/sign_out')
 def sign_out():
     if "username" in session:
         flash("Successfully Logged Out!")
         session.pop('username')
     return redirect(url_for('home'))
-
 
 
 if __name__ == "__main__":
