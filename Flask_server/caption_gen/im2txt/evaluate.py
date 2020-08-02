@@ -126,3 +126,50 @@ def run_once(model, saver, summary_writer, summary_op):
 
     coord.request_stop()
     coord.join(threads, stop_grace_period_secs=10)
+
+
+def run():
+  """Runs evaluation in a loop, and logs summaries to TensorBoard."""
+  # Create the evaluation directory if it doesn't exist.
+  eval_dir = FLAGS.eval_dir
+  if not tf.gfile.IsDirectory(eval_dir):
+    tf.logging.info("Creating eval directory: %s", eval_dir)
+    tf.gfile.MakeDirs(eval_dir)
+
+  g = tf.Graph()
+  with g.as_default():
+    # Build the model for evaluation.
+    model_config = configuration.ModelConfig()
+    model_config.input_file_pattern = FLAGS.input_file_pattern
+    model = show_and_tell_model.ShowAndTellModel(model_config, mode="eval")
+    model.build()
+
+    # Create the Saver to restore model Variables.
+    saver = tf.train.Saver()
+
+    # Create the summary operation and the summary writer.
+    summary_op = tf.summary.merge_all()
+    summary_writer = tf.summary.FileWriter(eval_dir)
+
+    g.finalize()
+
+    # Run a new evaluation run every eval_interval_secs.
+    while True:
+      start = time.time()
+      tf.logging.info("Starting evaluation at " + time.strftime(
+          "%Y-%m-%d-%H:%M:%S", time.localtime()))
+      run_once(model, saver, summary_writer, summary_op)
+      time_to_next_eval = start + FLAGS.eval_interval_secs - time.time()
+      if time_to_next_eval > 0:
+        time.sleep(time_to_next_eval)
+
+        
+def main(unused_argv):
+  assert FLAGS.input_file_pattern, "--input_file_pattern is required"
+  assert FLAGS.checkpoint_dir, "--checkpoint_dir is required"
+  assert FLAGS.eval_dir, "--eval_dir is required"
+  run()
+
+
+if __name__ == "__main__":
+  tf.app.run()
