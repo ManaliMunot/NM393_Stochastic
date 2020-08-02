@@ -77,3 +77,15 @@
                <i class="fa fa-user fa-stack-1x"></i>
             </span>
              </div>
+            
+    <form method="post" id="singninFrom">
+            <div class="form-group">
+              {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                  {% for msg in messages %}
+                  <div id="successMessage" class="alert alert-info mb-3" role="alert">
+                    {{ msg }}
+                  </div>
+                  {% endfor %}
+                {% endif %}
+              {% endwith %}
