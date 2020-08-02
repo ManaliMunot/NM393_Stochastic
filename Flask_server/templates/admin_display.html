@@ -4,7 +4,12 @@
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<script src="http://code.jquery.com/jquery.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="{{ url_for('static', filename='app.js') }}"></script>
+
 	<!-- Bootstrap CSS -->
 	 <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
@@ -15,15 +20,15 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
 
   <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
 
   <!-- fonts style -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet" />
   <!-- Custom styles for this template -->
-  <link href="css/style.css" rel="stylesheet" />
-  <!-- responsive style -->
-  <link href="css/responsive.css" rel="stylesheet" />
-    
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+	<!-- responsive style -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+
    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -42,7 +47,7 @@
      .mfp-no-margins img.mfp-img {
 	padding: 0;
 }
-    
+
     /*
     Image credits:
     uifaces.com (http://uifaces.com/authorized)
@@ -50,14 +55,33 @@
 
 #login { display: none; }
 .login,
-.logout { 
-    position: absolute; 
+.logout {
+    position: absolute;
     top: -3px;
     right: 0;
 }
+
+.button_highlight:hover{
+	 background-color: white;
+}
+
+.button_highlight{
+	background-color: orange;
+	border: none;
+	color : black;
+	padding:  : 10px;
+	text-align: :center;
+	display: inline-block;
+	text-decoration: none;
+	font-size: 15px;
+	border-radius:100px;
+
+}
+
+
 .page-header { position: relative; }
 .reviews {
-    color: #555;    
+    color: #555;
     font-weight: bold;
     margin: 10px auto 20px;
 }
@@ -72,13 +96,13 @@
     {
         border-bottom: 1px solid black;
          padding: 10px;
-   
+
     }
 .media-body { position: relative;
      padding-left: 30px;
 }
-.media-date { 
-    position: absolute; 
+.media-date {
+    position: absolute;
     right: 25px;
     top: 25px;
 }
@@ -107,7 +131,7 @@
     position: relative;
     width: 120px;
     height: 120px;
-    background: #eee url('https://s3.amazonaws.com/uifaces/faces/twitter/walterstephanie/128.jpg');    
+    background: #eee url('https://s3.amazonaws.com/uifaces/faces/twitter/walterstephanie/128.jpg');
     background-size: 120px;
     border-radius: 120px;
 }
@@ -167,7 +191,7 @@ input[type="file"]{
 }
 
 /* Add Animation */
-.modal-content, #caption {  
+.modal-content, #caption {
   -webkit-animation-name: zoom;
   -webkit-animation-duration: 0.6s;
   animation-name: zoom;
@@ -175,12 +199,12 @@ input[type="file"]{
 }
 
 @-webkit-keyframes zoom {
-  from {-webkit-transform:scale(0)} 
+  from {-webkit-transform:scale(0)}
   to {-webkit-transform:scale(1)}
 }
 
 @keyframes zoom {
-  from {transform:scale(0)} 
+  from {transform:scale(0)}
   to {transform:scale(1)}
 }
 
@@ -209,7 +233,7 @@ input[type="file"]{
   }
 }
 
-    
+
     </style>
 </head>
 <body class="hero_area sub_pages">
@@ -219,8 +243,8 @@ input[type="file"]{
     <header class="header_section">
       <div class="container">
         <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
-          <a class="navbar-brand" href="">
-            <img src="images/code.png" alt="" /><span>
+          <a class="navbar-brand" href="/uDashboard">
+            <img src="{{url_for('static', filename= 'images/code.png')}}" alt="" /><span>
               TEAM STOCHASTIC
             </span>
           </a>
@@ -229,113 +253,148 @@ input[type="file"]{
             <span class="navbar-toggler-icon"></span>
           </button>
 
-        
+
             <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
-              
-             <a class="navbar-brand" href=""> <span>Welcome, User</span></a>
+
+             <a class="navbar-brand" href=""> <span>Welcome,{{value_username	}}</span></a>
             <div class="quote_btn-container ml-lg-4 d-flex justify-content-center">
-               
-              <a href="index.html" class="text-uppercase custom_orange-btn mr-3">
+
+              <a href="/" class="text-uppercase custom_orange-btn mr-3">
                              Sign Out
-        
+
               </a>
                 </div>
-        
+
           </div>
         </nav>
       </div>
     </header>
-        
-        
-        
-        
+
+
+
        <div class="container">
-           <section class="service_section layout_padding " style="background-color: #f7f7f7;">
-           <div class="row">
-  <div class="col-sm-5">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">No of Users:</h5>
-        <p class="card-text">993</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-5">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">No of Grievances Submitted</h5>
-        <p class="card-text">500</p>
-      </div>
-    </div>
-  </div>
-               </div>  </section>   
+
+										 <section class="service_section layout_padding " style="background-color: #f7f7f7;">
+										 <div class="row">
+						<div class="col-sm-5 col-sm-offset-1">
+							<div class="card">
+								<div class="card-body">
+									<h5 class="card-title">No of Users:</h5>
+									<p class="card-text">{{ u_count }}</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-5">
+							<div class="card">
+								<div class="card-body">
+									<h5 class="card-title">No of Grievances Submitted</h5>
+									<p class="card-text">{{ g_count }}</p>
+								</div>
+							</div>
+						</div>
+												 </div>  </section>
+
+
   <div class="row">
     <div class="col-sm-10 col-sm-offset-1" id="logout">
-       
+
         <div class="comment-tabs">
-                   
+
             <div class="tab-content">
-                <div class="tab-pane active" id="comments-logout">                
+                <div class="tab-pane active" id="comments-logout">
                     <ul class="media-list">
-                      <li class="media">
-                          
-                          
-                        
-                          <a href="images/smiley.jpg" target="_blank"><img class="media-object img-circle" src="images/smiley.jpg" alt="profile"></a>
-                         
-              
-                        <div class="media-body">
-                          <div class="well well-lg">
-                              <h4 class="media-heading text-uppercase reviews">Marco </h4>
-                       
+										{% for entries in dbentry %}
+											<li  class="media">
+                          <a href="{{url_for('file', filename=entries['userImage_name'] )}}" target="_blank"><img class="media-object" src="{{url_for('file', filename=entries['userImage_name'] )}}" alt="profile"></a>
 
-<!--
-                              <p class="media-comment pull-left" >
-                                Great snippet! Thanks for sharing.
+
+                        <div class="media-body" >
+                          <div class="well well-lg" style="padding-bottom : 40px">
+                              <h4 class="media-heading text-uppercase reviews"> {{entries['imgCategory']}} </h4>
+
+
+															<p class="media-comment pull-left" >
+                                {{entries['imgDescription']}}
                               </p>
-                         <p class="media-comment pull-right">Not verified</p><br><br>
-                           
--->
+															<br><br>
 
-        
-                              <div class="text-right">
-                              <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"> Reply</a>
-                              <a class="btn btn-warning btn-circle text-uppercase" style="align-items: right;" data-toggle="collapse" href="#"> 2 comments</a>
-                                  </div>
-                          </div>              
+															<p class="media-comment pull-left" >
+																<b>Keywords :</b>
+
+																{% for item in entries['key_highlight'] %}
+																<button class="button_highlight" disabled>
+																	{{item}}
+																	</button>
+																{% endfor %}
+														 </p>
+
+														 <br><br><br>
+
+														<p class="media-comment text-left" style="line-height: 22px;"> <b> Captions :</b>
+
+
+																		<ul style="list-style-type:disc">
+																		{% if entries['captions'] %}
+																			{% for caps in entries['captions'] %}
+
+																		 <li>{{caps}}</li>
+
+																			 {% endfor %}
+																		 {% endif %}
+																	 </ul>
+															</p>
+
+
+
+																			<div id="fading{{ entries['_id'] }}" class="text-right">
+				                              <!-- <a class="btn btn-info btn-circle text-uppercase" href="./resubmit?_id={{ entries['_id'] }}" id="reply"> Edit</a> -->
+
+																			<!-- Admin -->
+																			<button  class="btn btn-success updateButton" aria-label="Left Align" member_id="{{ entries['_id'] }}" >
+				  														<span class="glyphicon glyphicon glyphicon-ok" aria-hidden="true"></span>
+																		</button>
+																			<button type="button" class="btn btn-danger updateButtoncross" aria-label="Left Align" member_id="{{entries['_id']}}" >
+				  														<span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+
+																		</div>
+
+
+
+                          </div>
                         </div>
-                      </li>          
-                     
-                        
-                    </ul> 
+                      </li>
+											{% endfor %}
+
+                    </ul>
                 </div>
             </div>
         </div>
 	</div>
   </div>
-</div> 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-      
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
-	
-	<!-- Optional JavaScript --> 
-	<!-- jQuery first, then Popper.js, then Bootstrap JS --> 
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
- 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> 
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	<script src="js/form-script.js"></script>
+	<!-- <script src="js/form-script.js"></script> -->
+
 </body>
 </html>
