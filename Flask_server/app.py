@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, session, url_for, jsonify,flash
 from flask_bootstrap import Bootstrap
 import os
+from traffic_sign import *
 from werkzeug.utils import secure_filename
 from flask_pymongo import PyMongo
 
@@ -81,39 +82,35 @@ def Signup():
     return render_template('signup.html')
 
 
-@app.route('/details')
-def read_more():
-    return render_template('details.html')
-
 
 @app.route('/details')
 def read_more():
     return render_template('details.html')
+#
+#
+# @app.route('/adminDashboard')
+# def adminDashboard():
+#     if 'username' in session:
+#         username = session['username']
+#
+#         return redirect(url_for('admin_display'))
+#
+#     return redirect(url_for('login'))
 
 
-@app.route('/adminDashboard')
-def adminDashboard():
-    if 'username' in session:
-        username = session['username']
-
-        return redirect(url_for('admin_display'))
-
-    return redirect(url_for('login'))
-
-
-@app.route('/admin_display')
-def admin_display():
-    if 'username' in session:
-        username = session['username']
-
-        images = mongo.db.user_images.find({'isVerified':0})
-        user_count = mongo.db.users.find().count()
-        grievances_count = mongo.db.user_images.find().count()
-
-
-        return render_template('admin_display.html', value_username = username, dbentry = images, u_count = user_count, g_count = grievances_count)
-    else:
-        return redirect(url_for('login'))
+# @app.route('/admin_display')
+# def admin_display():
+#     if 'username' in session:
+#         username = session['username']
+#
+#         images = mongo.db.user_images.find({'isVerified':0})
+#         user_count = mongo.db.users.find().count()
+#         grievances_count = mongo.db.user_images.find().count()
+#
+#
+#         return render_template('admin_display.html', value_username = username, dbentry = images, u_count = user_count, g_count = grievances_count)
+#     else:
+#         return redirect(url_for('login'))
 
 
 @app.route('/user', methods=['GET','POST'])
@@ -125,17 +122,23 @@ def upload_image():
         return redirect(url_for('login'))
 
 
-@app.route('/file/<filename>')
-def file(filename):
-    return mongo.send_file(filename)
+@app.route('/upload_demo',methods=['POST'])
+def upload_demo():
+    if request.files['imageFile']:
+        classifier.run()
+    return render_template('upload_demo')
+#
+# @app.route('/file/<filename>')
+# def file(filename):
+#     return mongo.send_file(filename)
 
-
-@app.route('/sign_out')
-def sign_out():
-    if "username" in session:
-        flash("Successfully Logged Out!")
-        session.pop('username')
-    return redirect(url_for('home'))
+#
+# @app.route('/sign_out')
+# def sign_out():
+#     if "username" in session:
+#         flash("Successfully Logged Out!")
+#         session.pop('username')
+#     return redirect(url_for('home'))
 
 
 if __name__ == "__main__":
