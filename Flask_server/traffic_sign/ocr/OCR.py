@@ -142,4 +142,4 @@ def get_text(image,width=320,height=320,confidence=0.5,east=""):
 	  cv2.putText(orig, text, (start_X, end_Y + 30),cv2.FONT_HERSHEY_SIMPLEX, 0.7,(0,255, 0), 2)
   cv2.imwrite('res.jpg',orig)
   return text_res
-if __name__=="__main__": get_text('download (2).jfif')
+if __name__=="__main__": get_text('0u3LKR7.jpg')

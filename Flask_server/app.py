@@ -152,7 +152,8 @@ def upload_image():
 
 @app.route('/upload_demo',methods=['POST'])
 def upload_demo():
-    if request.files['imageFile']:
+    if 'imageFile' in request.files:
+
         classifier.run()
     return render_template('upload_demo')
 #
