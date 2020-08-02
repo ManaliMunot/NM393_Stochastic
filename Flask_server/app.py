@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, session, url_for, j
 from flask_bootstrap import Bootstrap
 import os
 from bson import ObjectId # For ObjectId to work
+from key_extract.keyword_extractor import *
+from caption_gen.get_caption import *
 from traffic_sign import *
 from werkzeug.utils import secure_filename
 from flask_pymongo import PyMongo
@@ -118,7 +120,6 @@ def admin_display():
         user_count = mongo.db.users.find().count()
         grievances_count = mongo.db.user_images.find().count()
 
-
         return render_template('admin_display.html', value_username = username, dbentry = images, u_count = user_count, g_count = grievances_count)
     else:
         return redirect(url_for('login'))
@@ -156,18 +157,12 @@ def upload_demo():
 
         classifier.run()
     return render_template('upload_demo')
+
+
 #
 # @app.route('/file/<filename>')
 # def file(filename):
 #     return mongo.send_file(filename)
-
-#
-# @app.route('/sign_out')
-# def sign_out():
-#     if "username" in session:
-#         flash("Successfully Logged Out!")
-#         session.pop('username')
-#     return redirect(url_for('home'))
 
 
 @app.route('/to_db',methods=['POST'])
@@ -215,9 +210,65 @@ def uDashboard():
 
 
 
+@app.route('/display')
+def display():
+    if 'username' in session:
+        username = session['username']
+
+        images = mongo.db.user_images.find({'uname':username})
+
+        return render_template('display.html', value_username = username, dbentry = images)
+    else:
+        return redirect(url_for('login'))
+
+
+
+@app.route('/resubmit',methods=['POST','GET'])
+def user_resubmit():
+
+    if 'username' in session:
+        username = session['username']
+        id=request.values.get("_id")
+        get_detail=mongo.db.user_images.find_one({"_id":ObjectId(id)})
+
+        return render_template('user_resubmit.html',value_username= username, image = get_detail)
+
+    return redirect(url_for('login'))
+
+
+
+
+@app.route('/reupload_grievances', methods=['POST'])
+def reupload_grievances():
+    if 'username' in session:
+
+        if 'userImage' in request.files:
+            userImage = request.files['userImage']
+            imgName = secure_filename(userImage.filename)
+            imgID = request.values.get("_id")
+            imgDesc = request.values.get("description")
+            imgCat = request.values.get("category")
+            mongo.save_file(imgName, userImage)
+
+            extractor = KeywordExtractor()
+            extractor.analyze(imgDesc, candidate_pos = ['NOUN', 'PROPN','VERB'], window_size=4, lower=False)
+            highlights = extractor.get_keywords(12)
+
+            mongo.db.user_images.update({"_id" : ObjectId(imgID)}, {"$set": {'userImage_name': imgName,'imgDescription' : imgDesc ,
+            'imgCategory' : imgCat,'isVerified':0, 'isValidated':1, 'key_highlight':highlights}}, upsert=True)
+            return redirect(url_for('display'))
+
+
+
+@app.route('/sign_out')
+def sign_out():
+    if "username" in session:
+        flash("Successfully Logged Out!")
+        session.pop('username')
+    return redirect(url_for('home'))
 
 
 
 if __name__ == "__main__":
-    app.secret_key = 'merasecret'
+    app.secret_key = 'AIzaSyA8eaHt9Dh5H57Zh0xVTqxVdBFCvFMqFjQ'
     app.run(debug = True)
