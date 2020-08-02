@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<!-- Bootstrap CSS -->
+	 <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap-social/bootstrap-social.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="css/style.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="css/responsive.css" rel="stylesheet" />
+    
+   <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <title>Login Page</title>
+<style>body { padding-top:30px; }
+.widget .panel-body { padding:0px; }
+.widget .list-group { margin-bottom: 0; }
+.widget .panel-title { display:inline }
+.widget .label-info { float: right; }
+.widget li.list-group-item {border-radius: 0;border: 0;border-top: 1px solid #ddd;}
+.widget li.list-group-item:hover { background-color: rgba(86,61,124,.1); }
+.widget .mic-info { color: #666666;font-size: 11px; }
+.widget .action { margin-top:5px; }
+.widget .comment-text { font-size: 12px; }
+.widget .btn-block { border-top-left-radius:0px;border-top-right-radius:0px; }
+     .mfp-no-margins img.mfp-img {
+	padding: 0;
+}
+    
+    /*
+    Image credits:
+    uifaces.com (http://uifaces.com/authorized)
+*/
+
+#login { display: none; }
+.login,
+.logout { 
+    position: absolute; 
+    top: -3px;
+    right: 0;
+}
+.page-header { position: relative; }
+.reviews {
+    color: #555;    
+    font-weight: bold;
+    margin: 10px auto 20px;
+}
+.notes {
+    color: #999;
+    font-size: 12px;
+}
+.media .media-object { max-width: 120px;
+    padding: 5px;
+    }
+    .media
+    {
+        border-bottom: 1px solid black;
+         padding: 10px;
+   
+    }
+.media-body { position: relative;
+     padding-left: 30px;
+}
+.media-date { 
+    position: absolute; 
+    right: 25px;
+    top: 25px;
+}
+
+.media-comment { margin-bottom: 20px; }
+.media-replied { margin: 0 0 20px 50px; }
+.media-replied .media-heading { padding-left: 6px; }
+
+.btn-circle {
+    font-weight: bold;
+    font-size: 12px;
+    padding: 6px 15px;
+    border-radius: 20px;
+}
+.btn-circle span { padding-right: 6px; }
+.embed-responsive { margin-bottom: 20px; }
+.tab-content {
+    padding: 50px 15px;
+    border: 1px solid #ddd;
+    border-top: 0;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.custom-input-file {
+    overflow: hidden;
+    position: relative;
+    width: 120px;
+    height: 120px;
+    background: #eee url('https://s3.amazonaws.com/uifaces/faces/twitter/walterstephanie/128.jpg');    
+    background-size: 120px;
+    border-radius: 120px;
+}
+input[type="file"]{
+    z-index: 999;
+    line-height: 0;
+    font-size: 0;
+    position: absolute;
+    opacity: 0;
+    filter: alpha(opacity = 0);-ms-filter: "alpha(opacity=0)";
+    margin: 0;
+    padding:0;
+    left:0;
+}
+
+#myImg,#myImg1,#myImg2 {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#myImg,#myImg1,#myImg2 :hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+/* Caption of Modal Image */
+#caption,#caption1,#caption2{
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation */
+.modal-content, #caption {  
+  -webkit-animation-name: zoom;
+  -webkit-animation-duration: 0.6s;
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@-webkit-keyframes zoom {
+  from {-webkit-transform:scale(0)} 
+  to {-webkit-transform:scale(1)}
+}
+
+@keyframes zoom {
+  from {transform:scale(0)} 
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close,.close1,.close2 {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close,.close1,.close2:hover,
+.close,.close1,.close2:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .modal-content {
+    width: 100%;
+  }
+}
+
+    
+    </style>
+</head>
+<body class="hero_area sub_pages">
+	<div class="overlay"></div>
+	<div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
+          <a class="navbar-brand" href="">
+            <img src="images/code.png" alt="" /><span>
+              TEAM STOCHASTIC
+            </span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+        
+            <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
+              
+             <a class="navbar-brand" href=""> <span>Welcome, User</span></a>
+            <div class="quote_btn-container ml-lg-4 d-flex justify-content-center">
+               
+              <a href="index.html" class="text-uppercase custom_orange-btn mr-3">
+                             Sign Out
+        
+              </a>
+                </div>
+        
+          </div>
+        </nav>
+      </div>
+    </header>
+        
+        
+        
+        
+       <div class="container">
+           <section class="service_section layout_padding " style="background-color: #f7f7f7;">
+           <div class="row">
+  <div class="col-sm-5">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">No of Users:</h5>
+        <p class="card-text">993</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-5">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">No of Grievances Submitted</h5>
+        <p class="card-text">500</p>
+      </div>
+    </div>
+  </div>
+               </div>  </section>   
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1" id="logout">
+       
+        <div class="comment-tabs">
+                   
+            <div class="tab-content">
+                <div class="tab-pane active" id="comments-logout">                
+                    <ul class="media-list">
+                      <li class="media">
+                          
+                          
+                        
+                          <a href="images/smiley.jpg" target="_blank"><img class="media-object img-circle" src="images/smiley.jpg" alt="profile"></a>
+                         
+              
+                        <div class="media-body">
+                          <div class="well well-lg">
+                              <h4 class="media-heading text-uppercase reviews">Marco </h4>
+                       
+
+<!--
+                              <p class="media-comment pull-left" >
+                                Great snippet! Thanks for sharing.
+                              </p>
+                         <p class="media-comment pull-right">Not verified</p><br><br>
+                           
+-->
+
+        
+                              <div class="text-right">
+                              <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"> Reply</a>
+                              <a class="btn btn-warning btn-circle text-uppercase" style="align-items: right;" data-toggle="collapse" href="#"> 2 comments</a>
+                                  </div>
+                          </div>              
+                        </div>
+                      </li>          
+                     
+                        
+                    </ul> 
+                </div>
+            </div>
+        </div>
+	</div>
+  </div>
+</div> 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      
+    </div>
+	
+	<!-- Optional JavaScript --> 
+	<!-- jQuery first, then Popper.js, then Bootstrap JS --> 
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+ 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> 
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="js/form-script.js"></script>
+</body>
+</html>
