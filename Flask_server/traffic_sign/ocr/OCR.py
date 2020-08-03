@@ -10,7 +10,6 @@ import cv2
 import pytesseract
 import os
 
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 def get_text(image,width=320,height=320,confidence=0.5,east=""):
   east  = os.curdir+'/frozen_east_text_detection.pb'

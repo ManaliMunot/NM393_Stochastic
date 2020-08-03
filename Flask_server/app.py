@@ -3,7 +3,8 @@ from flask_bootstrap import Bootstrap
 from bson import ObjectId # For ObjectId to work
 from key_extract.keyword_extractor import *
 import os
-from caption_gen.get_caption import *
+from traffic_sign.ocr import OCR
+#from caption_gen.get_caption import *
 # from flask_paginate import Pagination, get_page_parameter
 import bcrypt
 from werkzeug.utils import secure_filename
@@ -11,7 +12,7 @@ from werkzeug.utils import secure_filename
 from flask_pymongo import PyMongo
 
 UPLOAD_FOLDER = './uploads'
-path = 'E:/SIH/NM393/NM393_Stochastic/Flask_server/uploads/'
+path = '/home/termi/Documents/SIH/NM393_Stochastic/Flask_server/uploads/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif','ppm'}
 
 app = Flask(__name__)
@@ -155,11 +156,15 @@ def verify_not():
 
 @app.route('/user', methods=['GET','POST'])
 def upload_image():
-    if 'username' in session:
-        username = session['username']
-        return render_template('user.html',value_username= username)
-    else:
-        return redirect(url_for('login'))
+
+	return render_template('user.html')
+ 	
+    #if 'username' in session:
+    #    username = session['username']
+    #    return render_template('user.html',value_username= username)
+    #else:
+  	
+	
 
 
 @app.route('/to_db',methods=['POST'])
@@ -175,20 +180,24 @@ def to_db():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            caption_dict = run(path+filename)
-            os.remove(path+filename)
+            txt = path+filename
+            ocrlist = OCR.get_text(txt)
+            txt_ocr = ",".join(ocrlist)
+            return txt_ocr
+         #   caption_dict = run(path+filename)
+        #    os.remove(path+filename)
 
-            captions = []
-            for value in caption_dict.values():
-                captions.append(value[0])
+       #     captions = []
+       #    for value in caption_dict.values():
+       #        captions.append(value[0])
 
-        extractor = KeywordExtractor()
-        extractor.analyze(imgDesc, candidate_pos = ['NOUN', 'PROPN','VERB'], window_size=4, lower=False)
-        highlights = extractor.get_keywords(12)
+        #extractor = KeywordExtractor()
+        #extractor.analyze(imgDesc, candidate_pos = ['NOUN', 'PROPN','VERB'], window_size=4, lower=False)
+        #highlights = extractor.get_keywords(12)
 
-        mongo.save_file(filename, file)
-        mongo.db.user_images.insert_one({'uname':session['username'], 'userImage_name': filename,'imgDescription' : imgDesc ,'imgCategory' : imgCat,
-                                            'isValidated':0,'isVerified':0, 'captions': captions,'key_highlight':highlights})
+        #mongo.save_file(filename, file)
+        #mongo.db.user_images.insert_one({'uname':session['username'], 'userImage_name': filename,'imgDescription' : imgDesc ,'imgCategory' : imgCat,
+        #                                    'isValidated':0,'isVerified':0, 'captions': captions,'key_highlight':highlights})
 
         flash("Image Uploaded")
         return redirect(url_for('upload_image'))
@@ -196,6 +205,25 @@ def to_db():
 @app.route('/file/<filename>')
 def file(filename):
     return mongo.send_file(filename)
+
+
+
+
+@app.route('/upload_ocr', methods=['POST','GET'])
+def upload_ocr():
+	if 'imageFile' in request.files:
+	
+		ocrimage = request.files['imageFile']
+		ocrimage_name = secure_filename(ocrimage.filename)
+		ocrimage.save(os.path.join(app.config['UPLOAD_FOLDER'], ocrimage_name))
+		ocrtext = get_text(path+ocrimage_name)
+		return "Hello"
+		return ocrtext
+		
+		
+		
+	return render_template('upload_demo.html')
+
 
 
 
